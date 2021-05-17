@@ -1,0 +1,12 @@
+git clone https://gabrielpiscoya@bitbucket.org/gabrielpiscoya/lesson_02.git
+git init
+touch a.html b.xml c.txt d.py e.js f.java
+vim a.html
+vim b.xml
+vim c.txt
+vim d.py
+vim e.js
+vim f.java
+git add .
+git commit -m "First Commit"
+git push origin main
