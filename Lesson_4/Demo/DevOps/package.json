@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "cucumber": "^7.2.1"
+    "@cucumber/cucumber": "^7.2.1"
   }
 }
