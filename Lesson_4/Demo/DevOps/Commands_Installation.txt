@@ -1,0 +1,51 @@
+sudo apt-get update
+sudo apt-get install node.js
+node --version
+npm --version
+https://code.visualstudio.com/download  ---> .deb
+Go to terminal
+ls -ltr
+cd Downloads/
+sudo dpkg -i code_1.56.2-1620838498_amd64.deb
+mkdir DevOps
+cd DevOps/
+Visual Studio ---> File  ----> Open "DevOps" Folder
+Visual Studio ---> View ---> Terminal
+npm init -yes
+npm install --save-dev @cucumber/cucumber
+cd DevOps/
+mkdir features
+cd features/
+mkdir steps
+cd DevOps/
+from Nitish Gupta to All Attendees:
+vi cucumber.js
+module.exports = {
+  default: `--format-options '{"snippetInterface": "synchronous"}'`
+}
+from Nitish Gupta to All Attendees:
+cd  features/steps
+vi stepdef.js
+const assert = require('assert');
+const { Given, When, Then } = require('cucumber');
+
+from Nitish Gupta to All Attendees:
+modify the package.json
+{
+  "name": "DevOps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cucumber": "^7.2.1"
+  }
+}
+
+from Nitish Gupta to All Attendees:
+run npm test in the terminal of visual studio ---> confirm cucumber is installed
