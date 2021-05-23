@@ -1,0 +1,23 @@
+
+Demo-3 : 
+
+#Installing Jenkins
+
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo su -
+vi /etc/apt/sources.list
+deb https://pkg.jenkins.io/debian-stable binary/
+exit
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+sudo apt-get install jenkins
+sudo su  -
+cat /var/lib/jenkins/secrets/initialAdminPassword
+exit
+
+#Configuring Jenkins 
+
+
+1- Install the plugin you require - Ex. Maven
+2- Configure Environment Variables inside Jenkins - JAVA_HOME , MAVEN_HOME, GIT Repo
+
