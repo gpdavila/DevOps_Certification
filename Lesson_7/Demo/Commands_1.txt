@@ -1,0 +1,29 @@
+Docker
+
+from Nitish Gupta to All Attendees:
+git clone https://github.com/SimplilearnDevOpsOfficial/DockerWithMySQL.git
+ls -ltr
+cd DockerWithMySQL/
+docker
+docker volume create --name monitoring_data
+docker volume ls
+ls -lr
+chmod u+x runserver_first
+cat runserver_first
+./runserver_first
+docker logs mysql
+docker inspect mysql
+ls -ltr
+chmod 777 runclient
+cat runclient 
+./runclient
+from Nitish Gupta to All Attendees:
+mysql -h 172.17.0.2 -u student -p
+It will ask for password and password is student
+show databases;
+use monitoring;
+show tables;
+create table docker(name VARCHAR(20));
+show tables;
+quit;
+exit

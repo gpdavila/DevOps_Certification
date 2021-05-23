@@ -1,0 +1,22 @@
+Docker 2
+from Nitish Gupta to All Attendees:
+mkdir compose-test
+ls -ltr
+cd compose-test/
+sudo apt-get install python-pip
+sudo pip install docker-compose
+docker-compose
+vi docker-compose.yaml
+version: '2'
+services:
+ compose-test:
+  image: centos
+  links:
+    - compose-db
+  command: /usr/bin/curl compose-db:6379
+ compose-db:
+  image: redis
+  expose:
+   - "6379" 
+cat docker-compose.yaml 
+sudo docker-compose up

@@ -1,0 +1,37 @@
+Ansible
+https://severalnines.com/database-blog/introduction-mysql-deployment-using-ansible-role
+sudo su -
+apt-get install software-properties-common
+apt-add-repository ppa:ansible/ansible
+apt-get update
+apt-get install ansible
+ssh-keygen -t rsa
+cd /root/.ssh
+Copy the content of id_rsa.pub and paste it in authorized_keys
+-- In real world this RSA should be generated in ansible-host and  copied to the target-host
+
+vi authorized_keys 
+ssh localhost -p 42006
+cd /etc/ansible
+vi hosts
+[webservers]
+localhost:42006
+ansible -m ping webservers
+vi apache2.yaml
+from Nitish Gupta to All Attendees:
+---
+- hosts: webservers
+  become: true
+  tasks:
+   - name: install apache2
+     apt: name=apache2 state=latest
+   - name: enabled mod_rewrite
+     apache2_module: name=rewrite state=present
+     notify:
+      - restart apache2
+  handlers:
+   - name: restart apache2
+     service: name=apache2 state=restarted
+from Nitish Gupta to All Attendees:
+ansible-playbook apache2.yaml --check
+ansible -m shell -a 'free -m' webservers
