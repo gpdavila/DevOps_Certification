@@ -1,0 +1,6 @@
+dockerlogin
+docker pull ubuntu
+docker images
+docker tag ubuntu <userid>/<repo_name>:myubuntuimagev01
+docker images
+docker push <userid>/<repo_name>:myubuntuimagev01

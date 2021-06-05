@@ -1,0 +1,87 @@
+sudo su -
+sudo useradd nagios
+sudo groupadd nagcmd
+sudo usermod -a -G nagcmd nagios
+sudo usermod -a -G nagcmd www-data
+apt update
+apt install -y autoconf bc gawk dc build-essential gcc libc6 make wget unzip apache2 php libapache2-mod-php libgd-dev libmcrypt-dev make libssl-dev snmp libnet-snmp-perl gettext
+cd ~/
+wget https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.6.tar.gz
+ls -ltr
+tar -xf nagios-4.4.6.tar.gz
+ls -ltr
+cd nagioscore-nagios-4.4.6
+ls -ltr
+./configure --with-nagios-group=nagios --with-command-group=nagcmd --with-httpd-conf=/etc/apache2/sites-enabled/
+make all
+make install
+make install-init
+make install-commandmode
+make install-config
+make install-commandmode
+from Nitish Gupta to All Attendees:
+OUTPUT:
+######
+*** Configuration summary for nagios 4.4.6 2020-04-28 ***:
+ General Options:
+ -------------------------
+        Nagios executable:  nagios
+        Nagios user/group:  nagios,nagios
+       Command user/group:  nagios,nagcmd
+             Event Broker:  yes
+        Install ${prefix}:  /usr/local/nagios
+    Install ${includedir}:  /usr/local/nagios/include/nagios
+                Lock file:  /run/nagios.lock
+   Check result directory:  /usr/local/nagios/var/spool/checkresults
+           Init directory:  /lib/systemd/system
+  Apache conf.d directory:  /etc/apache2/sites-enabled/
+             Mail program:  /bin/mail
+                  Host OS:  linux-gnu
+          IOBroker Method:  epoll
+ Web Interface Options:
+ ------------------------
+                 HTML URL:  http://localhost/nagios/
+                  CGI URL:  http://localhost/nagios/cgi-bin/
+ Traceroute (used by WAP):  
+
+from Nitish Gupta to All Attendees:
+make all
+make install
+make install-daemoninit
+make install-commandmode 
+make install-config
+make install-webconf
+a2enmod rewrite cgi
+systemctl restart apache2
+htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+Username : nagiosadmin
+Password : nagiosadmin
+for svc in Apache ssh
+do
+ufw allow $svc
+done
+ufw enable
+apt install monitoring-plugins nagios-nrpe-plugin
+cd /usr/local/nagios/etc
+mkdir -p /usr/local/nagios/etc/servers
+vim nagios.cfg
+Uncomment the cfg_dir option that will be used for storing all server hosts configurations.
+cfg_dir=/usr/local/nagios/etc/servers
+vim resource.cfg
+Define the Nagios Monitoring Plugins path by changing the default configuration as shown below.
+$USER1$=/usr/lib/nagios/plugins
+vim objects/contacts.cfg
+Change the email address with your own.
+define contact{
+        ......
+        email             <YourEmailId>
+}
+
+from Nitish Gupta to All Attendees:
+systemctl start nagios
+systemctl enable nagios
+systemctl status nagios
+systemctl restart apache2
+Now open your web browser and type the server IP address following the nagios URL path.
+http://localhost/nagios/
+Now you will have to log in with the user nagiosadmin and type your password.

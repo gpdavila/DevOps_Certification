@@ -1,0 +1,23 @@
+sudo su -
+apt-get update
+apt-get install apt-transport-https -y
+lsof /var/lib/dpkg/lock-frontend
+kill -9 
+rm /var/lib/dpkg/lock-frontend
+dpkg --configure -a
+apt-get install docker.io -y
+apt-get install -y curl apt-transport-https docker.io
+systemctl start docker
+systemctl enable docker
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+sudo echo deb http://apt.kubernetes.io/ kubernetes-xenial main > /etc/apt/sources.list.d/kubernetes.list
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+apt-get update
+kubeadm init
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+sudo kubectl get pods  --all-namespaces 

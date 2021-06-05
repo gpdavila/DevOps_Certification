@@ -1,0 +1,13 @@
+docker run -it --name centos_nitish centos /bin/bash
+yum install -y net-tools
+ifconfig
+cat /etc/hosts
+hostname
+Exit - Control+D
+docker images
+docker commit centos_nitish centos_nitish_net
+docker images
+docker stop centos_nitish
+docker ps -all
+docker rm centos_nitish
+docker ps -all
