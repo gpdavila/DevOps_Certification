@@ -1,0 +1,136 @@
+Started by an SCM change
+Obtained Jenkinsfile from git https://github.com/gpdavila/DevOps_Final_Project
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/Final_Project
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone repository)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Final_Project/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/gpdavila/DevOps_Final_Project # timeout=10
+Fetching upstream changes from https://github.com/gpdavila/DevOps_Final_Project
+ > git --version # timeout=10
+ > git --version # 'git version 2.7.4'
+ > git fetch --tags --progress https://github.com/gpdavila/DevOps_Final_Project +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 21f435c1b174509f1f2d77c1e1914eead18828c0 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 21f435c1b174509f1f2d77c1e1914eead18828c0 # timeout=10
+Commit message: "Adding print"
+ > git rev-list --no-walk 0cdbf9589ab02cc19e9bcae0dfd901498dcabbe2 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build image)
+[Pipeline] isUnix
+[Pipeline] sh
++ docker build -t gabrielpiscoya/simplilearn:28 .
+Sending build context to Docker daemon  229.4kB
+
+Step 1/4 : FROM python:3
+ ---> 5b3b4504ff1f
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 85d5b3686ca0
+Step 3/4 : COPY . ./
+ ---> e5acef397fc4
+Step 4/4 : CMD [ "python","src.py" ]
+ ---> Running in 7c04849654f4
+Removing intermediate container 7c04849654f4
+ ---> c297917aafe0
+Successfully built c297917aafe0
+Successfully tagged gabrielpiscoya/simplilearn:28
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test image)
+[Pipeline] isUnix
+[Pipeline] sh
++ docker inspect -f . gabrielpiscoya/simplilearn:28
+.
+[Pipeline] withDockerContainer
+Jenkins does not seem to be running inside a container
+$ docker run -t -d -u 119:125 -w /var/lib/jenkins/workspace/Final_Project -v /var/lib/jenkins/workspace/Final_Project:/var/lib/jenkins/workspace/Final_Project:rw,z -v /var/lib/jenkins/workspace/Final_Project@tmp:/var/lib/jenkins/workspace/Final_Project@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** gabrielpiscoya/simplilearn:28 cat
+$ docker top 299b42531c69a1f00fb81be3437aae65d8dfac529927b4a31a486d639ad3585b -eo pid,comm
+[Pipeline] {
+[Pipeline] sh
++ echo Tests passed
+Tests passed
+[Pipeline] }
+$ docker stop --time=1 299b42531c69a1f00fb81be3437aae65d8dfac529927b4a31a486d639ad3585b
+$ docker rm -f 299b42531c69a1f00fb81be3437aae65d8dfac529927b4a31a486d639ad3585b
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push image)
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withDockerRegistry
+$ docker login -u gabrielpiscoya -p ******** https://registry.hub.docker.com
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /var/lib/jenkins/workspace/Final_Project@tmp/bea917ca-9b3b-46b7-ad3a-5be744af752e/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] sh
++ docker tag gabrielpiscoya/simplilearn:28 registry.hub.docker.com/gabrielpiscoya/simplilearn:28
+[Pipeline] isUnix
+[Pipeline] sh
++ docker push registry.hub.docker.com/gabrielpiscoya/simplilearn:28
+The push refers to repository [registry.hub.docker.com/gabrielpiscoya/simplilearn]
+3cc48801f5fc: Preparing
+1583dd0de7f8: Preparing
+126ba0c24224: Preparing
+001ade22e15c: Preparing
+97e852d9107e: Preparing
+1591bf7ec708: Preparing
+dd3097cd7909: Preparing
+685934357c89: Preparing
+ccb9b68523fd: Preparing
+00bcea93703b: Preparing
+688e187d6c79: Preparing
+dd3097cd7909: Waiting
+685934357c89: Waiting
+ccb9b68523fd: Waiting
+00bcea93703b: Waiting
+688e187d6c79: Waiting
+1591bf7ec708: Waiting
+97e852d9107e: Layer already exists
+001ade22e15c: Layer already exists
+126ba0c24224: Layer already exists
+1583dd0de7f8: Layer already exists
+1591bf7ec708: Layer already exists
+dd3097cd7909: Layer already exists
+685934357c89: Layer already exists
+ccb9b68523fd: Layer already exists
+688e187d6c79: Layer already exists
+00bcea93703b: Layer already exists
+3cc48801f5fc: Pushed
+28: digest: sha256:4b9041493a71f7e21cf48bf72f2ffe9311da167dce523d4ad44f7cf05eca3e9c size: 2632
+[Pipeline] }
+[Pipeline] // withDockerRegistry
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Container)
+[Pipeline] sh
++ docker run --name C_28 gabrielpiscoya/simplilearn:28
+42
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

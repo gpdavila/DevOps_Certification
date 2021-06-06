@@ -1,0 +1,36 @@
+#Installing Jenkins
+
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo su -
+vi /etc/apt/sources.list
+deb https://pkg.jenkins.io/debian-stable binary/
+exit
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+sudo apt-get install jenkins
+sudo su  -
+cat /var/lib/jenkins/secrets/initialAdminPassword
+exit
+
+open localhost:8080 
+select default plugin installation
+create Admin User and password
+
+Configure Docker Hub Credential
+Manage Jenkins -> Manage Credentials -> Jenkins -> Global Credentials -> Add Credentials
+
+
+Install Docker Plugins
+	Docker Pipeline
+	Docker Plugin
+
+Create New Project  - Pipeline Project Type
+	Configure SCM 
+	Configure Pipeline to poll Jenkinsfile in git repo
+
+Create Simple Python Application 
+Create Dockerfile
+Create Jenkinsfile
+
+Make a simple change in order to test the pipeline trigger 
+Check container output
